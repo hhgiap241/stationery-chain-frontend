@@ -1,31 +1,41 @@
 import React from 'react';
-import {Container, Nav, NavDropdown} from "react-bootstrap";
+import {Link, NavLink} from "react-router-dom";
+import {Nav, Navbar, NavDropdown} from "react-bootstrap";
+import logo from '../../react-1-logo.svg';
 
-const NavigationBar = () => {
+const NavigationBar = ({keycloak}) => {
     return (
-        <NavigationBar bg="light" expand="lg">
-            <Container>
-                <NavigationBar.Brand href="#home">React-Bootstrap</NavigationBar.Brand>
-                <NavigationBar.Toggle aria-controls="basic-navbar-nav" />
-                <NavigationBar.Collapse id="basic-navbar-nav">
-                    <Nav className="me-auto">
-                        <Nav.Link href="#home">Home</Nav.Link>
-                        <Nav.Link href="#link">Link</Nav.Link>
-                        <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.2">
-                                Another action
-                            </NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item href="#action/3.4">
-                                Separated link
-                            </NavDropdown.Item>
-                        </NavDropdown>
-                    </Nav>
-                </NavigationBar.Collapse>
-            </Container>
-        </NavigationBar>
+        <Navbar bg="dark" variant="dark" style={{marginBottom: '13px'}}>
+            <div className={'container-fluid'}>
+                <Navbar.Brand as={NavLink} to={'/'}>
+                    <img
+                        alt="logo"
+                        src={logo}
+                        height={'40px'}
+                        width={'40px'}/>
+                </Navbar.Brand>
+                <Nav className="me-auto">
+                    <Nav.Link as={NavLink} to={'/'}>Home</Nav.Link>
+                    <NavDropdown title="Students" id="basic-nav-dropdown">
+                        <NavDropdown.Item as={Link} to={'/students'}>
+                            Manage Students
+                        </NavDropdown.Item>
+                        <NavDropdown.Item as={Link} to={'/students/id-cards'}>
+                            Manage Student Id Cards
+                        </NavDropdown.Item>
+                        <NavDropdown.Divider/>
+                        <NavDropdown.Item as={Link} to={'/students/add'}>
+                            Add New Student
+                        </NavDropdown.Item>
+                    </NavDropdown>
+                </Nav>
+                <Navbar.Collapse className="justify-content-end">
+                    <Navbar.Text style={{paddingRight: '3rem'}}>
+                        Hello, <a href="#login">hhh</a>
+                    </Navbar.Text>
+                </Navbar.Collapse>
+            </div>
+        </Navbar>
     );
 };
 
