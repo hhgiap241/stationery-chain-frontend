@@ -1,32 +1,26 @@
-import React from 'react'
+import React from "react";
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Keycloak from "keycloak-js";
-import {Button} from "react-bootstrap";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import Home from "./component/home/Home";
+import Error from "./component/error/Error";
+import NavigationBar from "./component/home/NavigationBar";
 
-const initOptions = {
-    url: "http://localhost:8180/auth/",
-    realm: "stationery-realm",
-    clientId: "react-client",
-    onLoad: "login-required",
-}
-const keycloak = new Keycloak(initOptions);
-keycloak.init({onLoad: initOptions.onLoad})
-    .then((authenticated) => {
-        alert(authenticated ? 'authenticated' : 'not authenticated');
-        localStorage.setItem('accessToken', keycloak.token);
-        localStorage.setItem('refreshToken', keycloak.refreshToken);
-        console.log(keycloak.token);
-    }).catch(err => {
-    console.log(err);
-    alert('failed to authenticated');
-})
-function App() {
+function App(props) {
+    console.log(props);
+    const keycloak = props.keycloak;
+    console.log(keycloak.tokenParsed.preferred_username);
     return (
         <div>
-            <Button variant="primary" onClick={() => keycloak.login()}>Login</Button>
-            <Button variant="primary" onClick={() => keycloak.logout()}>Logout</Button>
+            <BrowserRouter>
+                <NavigationBar keycloak={keycloak}/>
+                <Routes>
+                    <Route path={"/"} element={<Home keycloak={keycloak}/>}/>
+                    <Route path={'*'} element={<Error/>}/>
+                </Routes>
+            </BrowserRouter>
         </div>
+
     )
 }
 
