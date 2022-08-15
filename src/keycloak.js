@@ -7,16 +7,20 @@ const initOptions = {
     onLoad: "login-required",
 }
 const keycloak = new Keycloak(initOptions);
-keycloak.init({onLoad: initOptions.onLoad})
-    .then((authenticated) => {
-        alert(authenticated ? 'authenticated' : 'not authenticated');
-        localStorage.setItem('accessToken', keycloak.token);
-        localStorage.setItem('refreshToken', keycloak.refreshToken);
-        console.log(keycloak.token);
-        console.log(keycloak);
-        console.log('from nav', keycloak.tokenParsed.preferred_username)
-    }).catch(err => {
-    console.log(err);
-    alert('failed to authenticated');
-})
-export default keycloak
+
+const initKeycloak = (callback) =>{
+    keycloak.init({onLoad: initOptions.onLoad})
+        .then((authenticated) => {
+            alert(authenticated ? 'authenticated' : 'not authenticated');
+            localStorage.setItem('accessToken', keycloak.token);
+            localStorage.setItem('refreshToken', keycloak.refreshToken);
+            console.log(keycloak.token);
+            console.log(keycloak);
+            console.log('from nav', keycloak.tokenParsed.preferred_username)
+            callback(keycloak);
+        }).catch(err => {
+        console.log(err);
+        alert('failed to authenticated');
+    })
+}
+export default initKeycloak;

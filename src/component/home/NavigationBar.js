@@ -31,7 +31,7 @@ const NavigationBar = ({keycloak}) => {
                 </Nav>
                 <Navbar.Collapse className="justify-content-end">
                     <Navbar.Text style={{paddingRight: '3rem'}}>
-                        Hello, <a href="#login">hhh</a>
+                        Hello, {keycloak.tokenParsed.preferred_username}
                     </Navbar.Text>
                 </Navbar.Collapse>
             </div>
