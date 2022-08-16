@@ -24,16 +24,23 @@ const initKeycloak = (callback) => {
     })
 };
 const doLogin = keycloak.login;
-const doLogout = keycloak.logout;
+const doLogout = () => {
+    localStorage.removeItem('access-token');
+    localStorage.removeItem('refresh-token');
+    keycloak.logout();
+}
 const getToken = () => keycloak.token;
 const isAuthenticated = () => keycloak.authenticated;
 const updateToken = (successCallback) => {
     return keycloak.updateToken(5)
-        .then(successCallback)
+        .then(successCallback) // after success => callback run
         .catch(doLogin);
 };
 const getUsername = () => keycloak.tokenParsed.preferred_username;
 const getRoles = () => keycloak.tokenParsed.realm_access.roles;
+const hasRole = (role) => {
+    return keycloak.hasRealmRole(role);
+}
 
 const AuthService = {
     initKeycloak,
@@ -43,6 +50,7 @@ const AuthService = {
     getToken,
     updateToken,
     getUsername,
-    getRoles
+    getRoles,
+    hasRole,
 }
 export default AuthService;

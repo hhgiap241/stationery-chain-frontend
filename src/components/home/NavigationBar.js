@@ -5,7 +5,7 @@ import logo from '../../react-1-logo.svg';
 import AuthService from "../../services/AuthService";
 
 
-const NavigationBar = ({keycloak}) => {
+const NavigationBar = () => {
     return (
         <Navbar bg="dark" variant="dark" style={{marginBottom: '13px'}}>
             <div className={'container-fluid'}>
@@ -32,10 +32,10 @@ const NavigationBar = ({keycloak}) => {
                     </NavDropdown>
                 </Nav>
                 <Navbar.Collapse className="justify-content-end">
-                    <Navbar.Text style={{paddingRight: '3rem'}}>
+                    <Navbar.Text style={{paddingRight: '1rem'}}>
                         Hello, {AuthService.getUsername()} |
                     </Navbar.Text>
-                    <Button variant="outline-info" onClick={() => AuthService.doLogout()}>Logout</Button>
+                    <Button variant="outline-info" onClick={AuthService.doLogout}>Logout</Button>
                 </Navbar.Collapse>
             </div>
         </Navbar>
