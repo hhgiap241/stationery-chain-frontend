@@ -1,7 +1,9 @@
 import React from 'react';
 import {Link, NavLink} from "react-router-dom";
-import {Nav, Navbar, NavDropdown} from "react-bootstrap";
+import {Button, Nav, Navbar, NavDropdown} from "react-bootstrap";
 import logo from '../../react-1-logo.svg';
+import AuthService from "../../services/AuthService";
+
 
 const NavigationBar = ({keycloak}) => {
     return (
@@ -31,8 +33,9 @@ const NavigationBar = ({keycloak}) => {
                 </Nav>
                 <Navbar.Collapse className="justify-content-end">
                     <Navbar.Text style={{paddingRight: '3rem'}}>
-                        Hello, {keycloak.tokenParsed.preferred_username}
+                        Hello, {AuthService.getUsername()} |
                     </Navbar.Text>
+                    <Button variant="outline-info" onClick={() => AuthService.doLogout()}>Logout</Button>
                 </Navbar.Collapse>
             </div>
         </Navbar>
