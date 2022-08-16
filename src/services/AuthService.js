@@ -33,7 +33,7 @@ const getToken = () => keycloak.token;
 const isAuthenticated = () => keycloak.authenticated;
 const updateToken = (successCallback) => {
     return keycloak.updateToken(5)
-        .then(successCallback)
+        .then(successCallback) // after success => callback run
         .catch(doLogin);
 };
 const getUsername = () => keycloak.tokenParsed.preferred_username;

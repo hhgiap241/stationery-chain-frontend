@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import AuthService from './services/AuthService';
+import HttpService from "./services/HttpService";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const renderApp = () => root.render(
@@ -12,6 +13,7 @@ const renderApp = () => root.render(
     </React.StrictMode>
 );
 AuthService.initKeycloak(renderApp);
+HttpService.configure();
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
