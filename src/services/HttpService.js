@@ -9,13 +9,13 @@ const HttpMethods = {
 };
 
 const axiosInstance = axios.create();
-const configure = () =>{
+const configure = () => {
     axiosInstance.interceptors.request.use(config => {
-        if(AuthService.isAuthenticated()){
+        if (AuthService.isAuthenticated()) {
             const callback = () => {
                 config.headers.Authorization = `Bearer ${AuthService.getToken()}`;
                 return config;
-            }
+            };
             return AuthService.updateToken(callback);
         }
     });

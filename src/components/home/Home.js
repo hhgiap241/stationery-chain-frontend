@@ -6,9 +6,9 @@ import HttpService from "../../services/HttpService";
 
 const Home = () => {
     const handleTestApiBtn = () => {
-        HttpService.getAxiosInstance().get('/test')
+        HttpService.getAxiosInstance().get('http://localhost:8080/api/v1/customers')
             .then(res => {
-                console.log(res);
+                console.log(res.data);
             }).catch(err => {
             console.log(err);
         });

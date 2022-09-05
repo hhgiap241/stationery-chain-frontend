@@ -5,18 +5,22 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Home from "./components/home/Home";
 import Error from "./components/error/Error";
 import NavigationBar from "./components/home/NavigationBar";
+import ProductList from "./components/product/ProductList";
 
 function App() {
     return (
-        <div>
+        <>
             <BrowserRouter>
                 <NavigationBar/>
-                <Routes>
-                    <Route path={"/"} element={<Home/>}/>
-                    <Route path={'*'} element={<Error/>}/>
-                </Routes>
+                <div className={"container-fluid"}>
+                    <Routes>
+                        <Route path={"/"} element={<Home/>}/>
+                        <Route path={"/product"} element={<ProductList/>}/>
+                        <Route path={'*'} element={<Error/>}/>
+                    </Routes>
+                </div>
             </BrowserRouter>
-        </div>
+        </>
 
     )
 }

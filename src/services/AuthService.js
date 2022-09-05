@@ -1,4 +1,6 @@
 import Keycloak from 'keycloak-js';
+import axios from "axios";
+import HttpService from "./HttpService";
 
 // const initOptions = {
 //     url: "http://localhost:8180/auth/",
@@ -18,10 +20,11 @@ const initKeycloak = (callback) => {
             console.log(keycloak.token);
             console.log(keycloak);
             callback();
-        }).catch(err => {
-        console.log(err);
-        console.log('failed to authenticated');
-    })
+        })
+        .catch(err => {
+            console.error(err);
+            console.error('failed to authenticated');
+        })
 };
 const doLogin = keycloak.login;
 const doLogout = () => {
@@ -41,6 +44,7 @@ const getRoles = () => keycloak.tokenParsed.realm_access.roles;
 const hasRole = (role) => {
     return keycloak.hasRealmRole(role);
 }
+const getUserInformation = keycloak.loadUserProfile;
 
 const AuthService = {
     initKeycloak,
@@ -52,5 +56,6 @@ const AuthService = {
     getUsername,
     getRoles,
     hasRole,
+    getUserInformation
 }
 export default AuthService;

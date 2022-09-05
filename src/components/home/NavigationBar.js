@@ -18,18 +18,7 @@ const NavigationBar = () => {
                 </Navbar.Brand>
                 <Nav className="me-auto">
                     <Nav.Link as={NavLink} to={'/'}>Home</Nav.Link>
-                    <NavDropdown title="Students" id="basic-nav-dropdown">
-                        <NavDropdown.Item as={Link} to={'/students'}>
-                            Manage Students
-                        </NavDropdown.Item>
-                        <NavDropdown.Item as={Link} to={'/students/id-cards'}>
-                            Manage Student Id Cards
-                        </NavDropdown.Item>
-                        <NavDropdown.Divider/>
-                        <NavDropdown.Item as={Link} to={'/students/add'}>
-                            Add New Student
-                        </NavDropdown.Item>
-                    </NavDropdown>
+                    <Nav.Link as={NavLink} to={'/product'}>Products</Nav.Link>
                 </Nav>
                 <Navbar.Collapse className="justify-content-end">
                     <Navbar.Text style={{paddingRight: '1rem'}}>
