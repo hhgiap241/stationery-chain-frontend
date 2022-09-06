@@ -3,6 +3,7 @@ import {Link, NavLink} from "react-router-dom";
 import {Button, Nav, Navbar, NavDropdown} from "react-bootstrap";
 import logo from '../../react-1-logo.svg';
 import AuthService from "../../services/AuthService";
+import RenderOnRole from "../helper/RenderOnRole";
 
 
 const NavigationBar = () => {
@@ -22,7 +23,9 @@ const NavigationBar = () => {
                         <NavDropdown.Item as={Link} to={'/product'}>All Products</NavDropdown.Item>
                         <NavDropdown.Item as={Link} to={'/category'}>All Categories</NavDropdown.Item>
                     </NavDropdown>
-                    <Nav.Link as={NavLink} to={'/management'}>Managements</Nav.Link>
+                    <RenderOnRole role={'ADMIN'}>
+                        <Nav.Link as={NavLink} to={'/management'}>Management</Nav.Link>
+                    </RenderOnRole>
                 </Nav>
                 <Navbar.Collapse className="justify-content-end">
                     <Navbar.Text style={{paddingRight: '1rem'}}>

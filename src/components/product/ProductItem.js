@@ -8,7 +8,7 @@ const ProductItem = ({product}) => {
     const navigate = useNavigate();
     const handleEditBtn = () => {
         console.log(product);
-        navigate(`/product/edit/${product.skuCode}`);
+        navigate(`/product/edit/${product.skuCode}`, {state: {product: product}});
     }
     return (
         <Card style={{ width: '18rem' }}>

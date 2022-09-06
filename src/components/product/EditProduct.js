@@ -1,7 +1,11 @@
 import React from 'react';
+import {useLocation} from "react-router-dom";
 
-const EditProduct = ({product}) => {
-    console.log('edit product', product);
+const EditProduct = () => {
+    const {state} = useLocation();
+    console.log('edit product');
+    const product = state.product;
+    console.log(product);
     return (
         <div>
 
