@@ -18,7 +18,11 @@ const NavigationBar = () => {
                 </Navbar.Brand>
                 <Nav className="me-auto">
                     <Nav.Link as={NavLink} to={'/'}>Home</Nav.Link>
-                    <Nav.Link as={NavLink} to={'/product'}>Products</Nav.Link>
+                    <NavDropdown title={'Products'}>
+                        <NavDropdown.Item as={Link} to={'/product'}>All Products</NavDropdown.Item>
+                        <NavDropdown.Item as={Link} to={'/category'}>All Categories</NavDropdown.Item>
+                    </NavDropdown>
+                    <Nav.Link as={NavLink} to={'/management'}>Managements</Nav.Link>
                 </Nav>
                 <Navbar.Collapse className="justify-content-end">
                     <Navbar.Text style={{paddingRight: '1rem'}}>

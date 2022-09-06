@@ -18,6 +18,7 @@ const ProductList = () => {
         });
         HttpService.getAxiosInstance().get('http://localhost:8080/api/v1/category')
             .then(res => {
+                res.data.unshift({id: "all-category", name: "All"});
                 setCategories(prevState => {
                     return res.data.map(category => {
                         return {...category, checked: false}
