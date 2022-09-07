@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
-import {Button, FloatingLabel, Form, Image} from "react-bootstrap";
+import {Button, FloatingLabel, Form, Image, Modal} from "react-bootstrap";
 import HttpService from "../../services/HttpService";
 
 // update name, description, price, category, image url
@@ -10,6 +10,7 @@ const EditProduct = () => {
     console.log(skuCode);
     const [product, setProduct] = useState({name: '', description: '', price: '', category: '', url: ''});
     const [categories, setCategories] = useState([]);
+    const [showModal, setShowModal] = useState(false);
     useEffect(() => {
         HttpService.getAxiosInstance().get(`http://localhost:8080/api/v1/product/${skuCode}`)
             .then(res => {
@@ -61,13 +62,28 @@ const EditProduct = () => {
             categoryId: product.categoryId,
         }
         console.log(updatedProduct);
-        try{
+        try {
             let response = await HttpService.getAxiosInstance().put(`http://localhost:8080/api/v1/product/${skuCode}`, updatedProduct);
             console.log(response.data);
             // redirect to product page
-            navigate(-1);
+            navigate('/product');
         } catch (e) {
             console.log(e);
+        }
+    }
+    const handleShowModal = () => {
+        setShowModal(true);
+    }
+    const handleHideModal = () => {
+        setShowModal(false);
+    }
+    const deleteProductHandler = async () => {
+        try {
+            let response = await HttpService.getAxiosInstance().delete(`http://localhost:8080/api/v1/product/${skuCode}`);
+            console.log(response.data);
+            navigate('/product');
+        } catch (error) {
+            console.log(error);
         }
     }
     return (
@@ -114,11 +130,33 @@ const EditProduct = () => {
                                 }
                             </Form.Select>
                         </FloatingLabel>
-                        <Button variant="primary" type="button" onClick={event => handleSubmitBtn(event)}>
-                            Submit
-                        </Button>
+                        <div className={"float-end"}>
+                            <Button variant="danger" type="button" onClick={() => handleShowModal()}>
+                                Delete
+                            </Button>
+                            <div className={"more-space"}/>
+                            <Button variant="primary" type="button" onClick={event => handleSubmitBtn(event)}>
+                                Submit
+                            </Button>
+                        </div>
                     </Form>
                 </div>
+                <Modal show={showModal} onHide={handleHideModal}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Product Delete Confirmation</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        Are you sure you want to delete product {product.name}?
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={deleteProductHandler}>
+                            Yes
+                        </Button>
+                        <Button variant="primary" onClick={handleHideModal}>
+                            No
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
         </>
     );
