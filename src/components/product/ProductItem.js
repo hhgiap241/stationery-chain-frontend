@@ -3,6 +3,7 @@ import {Button, Card} from "react-bootstrap";
 import {FaCartPlus} from "react-icons/fa";
 import RenderOnRole from "../helper/RenderOnRole";
 import {useNavigate} from "react-router-dom";
+import Role from "../helper/Role";
 
 const ProductItem = ({product}) => {
     const navigate = useNavigate();
@@ -19,7 +20,7 @@ const ProductItem = ({product}) => {
                     <FaCartPlus/>&nbsp;{product.price}$
                 </Card.Text>
                 <Button variant="primary">Add To Card</Button>
-                <RenderOnRole role={"ADMIN"}>
+                <RenderOnRole role={Role.ADMIN}>
                     <div className={"more-space"}/>
                     <Button variant="secondary" onClick={handleEditBtn}>Edit</Button>
                 </RenderOnRole>

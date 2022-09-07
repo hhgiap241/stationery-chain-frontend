@@ -3,6 +3,7 @@ import AuthService from "../../services/AuthService";
 import RenderOnRole from "../helper/RenderOnRole";
 import {Button} from "react-bootstrap";
 import HttpService from "../../services/HttpService";
+import Role from "../helper/Role";
 
 const Home = () => {
     const handleTestApiBtn = () => {
@@ -15,7 +16,7 @@ const Home = () => {
     }
     return (
         <div>
-            <RenderOnRole role={'ADMIN'}>
+            <RenderOnRole role={Role.ADMIN}>
                 <h1>Only available for admin</h1>
             </RenderOnRole>
             <h1>This is home page {AuthService.getUsername()}</h1>

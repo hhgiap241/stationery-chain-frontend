@@ -10,6 +10,9 @@ import Management from "./components/admin/Management";
 import CategoryList from "./components/category/CategoryList";
 import EditProduct from "./components/product/EditProduct";
 import RoleRoute from "./components/helper/RoleRoute";
+import Role from "./components/helper/Role";
+import AddProduct from "./components/product/AddProduct";
+import AddCategory from "./components/category/AddCategory";
 
 function App() {
     return (
@@ -22,8 +25,11 @@ function App() {
                         <Route path={"/product"} element={<ProductList/>}/>
                         <Route path={"/category"} element={<CategoryList/>}/>
                         {/*// secure route*/}
-                        <Route element={<RoleRoute role={'ADMIN'}/>}>
-                            <Route path={"/management"} element={<Management/>}/>
+                        <Route element={<RoleRoute role={Role.ADMIN}/>}>
+                            <Route path={"/management"} element={<Management/>}>
+                                <Route path={"product/add"} element={<AddProduct/>}/>
+                                <Route path={"category/add"} element={<AddCategory/>}/>
+                            </Route>
                             <Route path={"/product/edit/:skuCode"} element={<EditProduct/>}/>
                         </Route>
                         <Route path={'*'} element={<Error/>}/>

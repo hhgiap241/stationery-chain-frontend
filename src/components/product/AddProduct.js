@@ -1,24 +1,14 @@
-import React, {useEffect, useState} from 'react';
-import {useNavigate, useParams} from "react-router-dom";
+import React, {useState, useEffect} from 'react';
 import {Button, FloatingLabel, Form, Image} from "react-bootstrap";
+import {useNavigate} from "react-router-dom";
 import HttpService from "../../services/HttpService";
 
-// update name, description, price, category, image url
-const EditProduct = () => {
-    const {skuCode} = useParams();
+const AddProduct = () => {
     const navigate = useNavigate();
-    console.log(skuCode);
-    const [product, setProduct] = useState({name: '', description: '', price: '', category: '', url: ''});
+    const [product, setProduct] = useState({name: '', description: '', price: '', category: '', url: 'https://image.goat.com/transform/v1/attachments/product_template_additional_pictures/images/021/545/490/original/509480_01.jpg.jpeg?action=crop&width=750'});
     const [categories, setCategories] = useState([]);
+    const [image, setImage] = useState(null);
     useEffect(() => {
-        HttpService.getAxiosInstance().get(`http://localhost:8080/api/v1/product/${skuCode}`)
-            .then(res => {
-                setProduct(res.data);
-                console.log(res.data);
-            }).catch(err => {
-            console.log(err);
-            console.log(err.response.data);
-        });
         HttpService.getAxiosInstance().get('http://localhost:8080/api/v1/category')
             .then(res => {
                 setCategories(res.data);
@@ -28,7 +18,6 @@ const EditProduct = () => {
             console.log(err.response.data);
         });
     }, []);
-    console.log(product);
     console.log(categories);
     const handleProductNameChange = (event) => {
         setProduct(prevState => {
@@ -53,30 +42,34 @@ const EditProduct = () => {
     }
     const handleSubmitBtn = async (event) => {
         event.preventDefault();
-        const updatedProduct = {
-            name: product.name,
-            url: product.url,
-            description: product.description,
-            price: product.price,
-            categoryId: product.categoryId,
-        }
-        console.log(updatedProduct);
         try{
-            let response = await HttpService.getAxiosInstance().put(`http://localhost:8080/api/v1/product/${skuCode}`, updatedProduct);
+            let response = await HttpService.getAxiosInstance().post('http://localhost:8080/api/v1/product', product);
             console.log(response.data);
             // redirect to product page
-            navigate(-1);
+            navigate('/product');
         } catch (e) {
             console.log(e);
         }
     }
+    const fileSelectedHandler = (event) =>{
+        console.log(event.target.files);
+        setImage(event.target.files[0]); // get first file
+    }
+    const fileUploadHandler = () => {
+        // const formData = new FormData();
+        // formData.append('image', image, image.name);
+        console.log('sending image', image);
+    }
     return (
         <>
-            <h1 className={"text-center"}>Edit Product: {product.name}</h1>
+            <h1 className={"text-center"}>Add New Product</h1>
             <div className={"row"}>
                 <div className={"col-3"}>
                     <Image src={product.url} rounded fluid/>
-                    <Button variant={"outline-primary"} className={"w-100 mt-3"}>Change Image</Button>
+                    <Form.Group controlId="formFile" className="mb-3 mt-3">
+                        <Form.Control type="file" onChange={event => fileSelectedHandler(event)} />
+                    </Form.Group>
+                    <Button variant={"outline-primary"} className={"w-100"} onClick={fileUploadHandler}>Upload Image</Button>
                 </div>
                 <div className={"col-9"}>
                     <Form>
@@ -124,4 +117,4 @@ const EditProduct = () => {
     );
 };
 
-export default EditProduct;
+export default AddProduct;

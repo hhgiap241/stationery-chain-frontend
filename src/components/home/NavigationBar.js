@@ -4,6 +4,7 @@ import {Button, Nav, Navbar, NavDropdown} from "react-bootstrap";
 import logo from '../../react-1-logo.svg';
 import AuthService from "../../services/AuthService";
 import RenderOnRole from "../helper/RenderOnRole";
+import Role from "../helper/Role";
 
 
 const NavigationBar = () => {
@@ -23,7 +24,7 @@ const NavigationBar = () => {
                         <NavDropdown.Item as={Link} to={'/product'}>All Products</NavDropdown.Item>
                         <NavDropdown.Item as={Link} to={'/category'}>All Categories</NavDropdown.Item>
                     </NavDropdown>
-                    <RenderOnRole role={'ADMIN'}>
+                    <RenderOnRole role={Role.ADMIN}>
                         <Nav.Link as={NavLink} to={'/management'}>Management</Nav.Link>
                     </RenderOnRole>
                 </Nav>
