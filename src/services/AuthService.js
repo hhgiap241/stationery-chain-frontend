@@ -1,6 +1,4 @@
 import Keycloak from 'keycloak-js';
-import axios from "axios";
-import HttpService from "./HttpService";
 
 // const initOptions = {
 //     url: "http://localhost:8180/auth/",

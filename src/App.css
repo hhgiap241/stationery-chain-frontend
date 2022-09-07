@@ -43,3 +43,8 @@
   margin-left: 10px;
   height: auto;
 }
+.more-space{
+  width: 5px;
+  height: auto;
+  display: inline-block;
+}
