@@ -4,10 +4,11 @@ import {useNavigate} from "react-router-dom";
 import HttpService from "../../services/HttpService";
 
 const AddProduct = () => {
-    const navigate = useNavigate();
     const [product, setProduct] = useState({name: '', description: '', price: '', category: '', url: 'https://image.goat.com/transform/v1/attachments/product_template_additional_pictures/images/021/545/490/original/509480_01.jpg.jpeg?action=crop&width=750'});
     const [categories, setCategories] = useState([]);
     const [image, setImage] = useState(null);
+    const [success, setSuccess] = useState(false);
+    const [error, setError] = useState("");
     useEffect(() => {
         HttpService.getAxiosInstance().get('http://localhost:8080/api/v1/category')
             .then(res => {
@@ -45,9 +46,11 @@ const AddProduct = () => {
         try{
             let response = await HttpService.getAxiosInstance().post('http://localhost:8080/api/v1/product', product);
             console.log(response.data);
-            // redirect to product page
-            navigate('/product');
+            setSuccess(true);
+            setError('');
         } catch (e) {
+            setSuccess(false);
+            setError(e.response.data["Product_Error: "]);
             console.log(e);
         }
     }
@@ -63,6 +66,8 @@ const AddProduct = () => {
     return (
         <>
             <h1 className={"text-center"}>Add New Product</h1>
+            {success && <div className={'alert alert-success'}>Saved!</div>}
+            {error && <div className={'alert alert-danger'}>{error}</div>}
             <div className={"row"}>
                 <div className={"col-3"}>
                     <Image src={product.url} rounded fluid/>
