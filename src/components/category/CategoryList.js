@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import HttpService from "../../services/HttpService";
-import {ListGroup} from "react-bootstrap";
+import {Button, ListGroup} from "react-bootstrap";
 
 const CategoryList = () => {
     const [categories, setCategories] = useState([]);
@@ -13,6 +13,9 @@ const CategoryList = () => {
             console.log(err.response.data);
         });
     }, []);
+    const deleteBtnHandler = (id) => {
+        alert("Delete category " + id);
+    }
     return (
         <>
             <h1 className={"text-center"}>Category List</h1>
@@ -20,12 +23,18 @@ const CategoryList = () => {
                 {
                     categories.map(category => {
                         return (
-                            <ListGroup.Item key={category.id}>{category.name}</ListGroup.Item>
+                            <ListGroup.Item key={category.id}>
+                                {category.name}
+                                <Button variant={"danger"}
+                                        className={"float-end"}
+                                        onClick={() => deleteBtnHandler(category.id)}
+                                >Delete
+                                </Button>
+                            </ListGroup.Item>
                         )
                     })
                 }
             </ListGroup>
-
         </>
     );
 };
