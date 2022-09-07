@@ -7,15 +7,14 @@ import {useNavigate} from "react-router-dom";
 const ProductItem = ({product}) => {
     const navigate = useNavigate();
     const handleEditBtn = () => {
-        console.log(product);
-        navigate(`/product/edit/${product.skuCode}`, {state: {product: product}});
+        navigate(`/product/edit/${product.skuCode}`);
     }
     return (
         <Card style={{ width: '18rem' }}>
             <Card.Img variant="top" src={product.url} />
             <Card.Body>
                 <Card.Title>{product.name}</Card.Title>
-                <Card.Text>{product.description}</Card.Text>
+                <Card.Text>{product.description.slice(0, 60)}...</Card.Text>
                 <Card.Text>
                     <FaCartPlus/>&nbsp;{product.price}$
                 </Card.Text>

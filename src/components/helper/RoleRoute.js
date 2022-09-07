@@ -4,7 +4,6 @@ import NotAllowed from "../error/NotAllowed";
 import {Outlet} from "react-router-dom";
 
 const RoleRoute = ({role}) => {
-    console.log('role = ', role);
     return (
         AuthService.hasRole(role) ? <Outlet/> : <NotAllowed/>
     )
