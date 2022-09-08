@@ -1,8 +1,7 @@
 import React from 'react';
-import {DropdownButton, Dropdown, ButtonGroup} from "react-bootstrap";
+import {ButtonGroup, Dropdown, DropdownButton} from "react-bootstrap";
 import {Link, useLocation} from "react-router-dom";
 import RenderOnSlug from "./RenderOnSlug";
-import AddProduct from "../product/AddProduct";
 
 const Management = () => {
     const location = useLocation();

@@ -3,29 +3,37 @@ import HttpService from "../../services/HttpService";
 import {Button, FloatingLabel, Form} from "react-bootstrap";
 
 const EditInventory = () => {
-    const [inventory, setInventory] = useState({skuCode: '', quantity: 0});
+    const [inventory, setInventory] = useState({skuCode: '', quantity: 0, isNew: true});
     const [products, setProducts] = useState([]);
     useEffect(() => {
-        HttpService.getAxiosInstance().get('http://localhost:8080/api/v1/product')
-            .then(res => {
-                setProducts(res.data);
-                console.log(res.data);
-            }).catch(err => {
-            console.log(err);
-            console.log(err.response.data);
-        });
-        // HttpService.getAxiosInstance().get(`http://localhost:8080/api/v1/inventory/${products.at(0).skuCode}`)
-        //     .then(res => {
-        //         setInventory(res.data);
-        //         console.log(res.data);
-        //     }).catch(err => {
-        //     console.log(err);
-        // });
+        let result;
+        const fetchProductData = async () => {
+            const productResponse = await HttpService.getAxiosInstance().get('http://localhost:8080/api/v1/product');
+            setProducts(productResponse.data);
+            return productResponse.data;
+        }
+        const fetchInventoryData = async () => {
+            result = await fetchProductData();
+            console.log(result);
+            const inventoryResponse = await HttpService.getAxiosInstance().get(`http://localhost:8080/api/v1/inventory/${result.at(0).skuCode}`);
+            setInventory({...inventoryResponse.data, isNew: false});
+        }
+        fetchInventoryData()
+            .catch(err => {
+                setInventory({skuCode: result.at(0).skuCode, quantity: 0, isNew: true});
+                console.log(err);
+            })
     }, []);
     const productSelectHandler = (event) => {
-        setInventory(prevState => {
-            return {...prevState, skuCode: event.target.value};
-        })
+        // fetch the quantity of current product in inventory service
+        const skuCode = event.target.value;
+        HttpService.getAxiosInstance().get(`http://localhost:8080/api/v1/inventory/${skuCode}`)
+            .then(res => {
+                setInventory({...res.data, isNew: false});
+            }).catch(err => {
+            setInventory({skuCode: skuCode, quantity: 0, isNew: true});
+            console.log(err);
+        });
     }
     const handleProductQuantityChange = (event) => {
         setInventory(prevState => {
@@ -34,8 +42,28 @@ const EditInventory = () => {
     }
     const submitBtnHandler = event => {
         event.preventDefault();
-        // call API to update quantity
         console.log(inventory);
+        const data = {
+            skuCode: inventory.skuCode,
+            quantity: inventory.quantity
+        };
+        if (inventory.isNew) {
+            // call post method
+            HttpService.getAxiosInstance().post('http://localhost:8080/api/v1/inventory', data)
+                .then(res => {
+                    console.log(res.data);
+                }).catch(err => {
+                console.log(err);
+            });
+        } else {
+            // cal put method
+            HttpService.getAxiosInstance().put('http://localhost:8080/api/v1/inventory', data)
+                .then(res => {
+                    console.log(res.data);
+                }).catch(err => {
+                console.log(err);
+            });
+        }
     }
     return (
         <>
