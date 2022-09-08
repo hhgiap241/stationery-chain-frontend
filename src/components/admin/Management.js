@@ -1,8 +1,7 @@
 import React from 'react';
-import {DropdownButton, Dropdown} from "react-bootstrap";
+import {ButtonGroup, Dropdown, DropdownButton} from "react-bootstrap";
 import {Link, useLocation} from "react-router-dom";
 import RenderOnSlug from "./RenderOnSlug";
-import AddProduct from "../product/AddProduct";
 
 const Management = () => {
     const location = useLocation();
@@ -10,13 +9,18 @@ const Management = () => {
     return (
         <>
             <h1 className={'text-center'}>Admin Management Dashboard</h1>
-            <div>
-                <DropdownButton id="dropdown-basic-button" title="Product">
+            <div className={'mb-3 justify-content-center text-center'}>
+                <DropdownButton id="product-dropdown-button" title="Product" as={ButtonGroup}>
                     <Dropdown.Item as={Link} to={'/management/product/add'}>Add New Product</Dropdown.Item>
                     <Dropdown.Item as={Link} to={'/management/category/add'}>Add New Category</Dropdown.Item>
                 </DropdownButton>
+                <div className="more-space"/>
+                <DropdownButton id="inventory-dropdown-button" title="Inventory" as={ButtonGroup}>
+                    <Dropdown.Item as={Link} to={'/management/inventory'}>View All Inventory</Dropdown.Item>
+                    <Dropdown.Item as={Link} to={'/management/inventory/edit'}>Update Product Quantity</Dropdown.Item>
+                </DropdownButton>
             </div>
-            <div className={"mb-3"}>
+            <div className={'mb-3'}>
                 <RenderOnSlug slug={location.pathname.split("/").splice(2).join("/")}/>
             </div>
         </>
