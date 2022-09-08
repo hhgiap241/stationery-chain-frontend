@@ -16,6 +16,7 @@ const Management = () => {
                 </DropdownButton>
                 <div className="more-space"/>
                 <DropdownButton id="inventory-dropdown-button" title="Inventory" as={ButtonGroup}>
+                    <Dropdown.Item as={Link} to={'/management/inventory'}>View All Inventory</Dropdown.Item>
                     <Dropdown.Item as={Link} to={'/management/inventory/edit'}>Update Product Quantity</Dropdown.Item>
                 </DropdownButton>
             </div>

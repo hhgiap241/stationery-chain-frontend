@@ -14,6 +14,7 @@ import Role from "./components/helper/Role";
 import AddProduct from "./components/product/AddProduct";
 import AddCategory from "./components/category/AddCategory";
 import EditInventory from "./components/product/EditInventory";
+import InventoryList from "./components/product/InventoryList";
 
 function App() {
     return (
@@ -30,6 +31,7 @@ function App() {
                             <Route path={"/management"} element={<Management/>}>
                                 <Route path={"product/add"} element={<AddProduct/>}/>
                                 <Route path={"category/add"} element={<AddCategory/>}/>
+                                <Route path={"inventory"} element={<InventoryList/>}/>
                                 <Route path={"inventory/edit"} element={<EditInventory/>}/>
                             </Route>
                             <Route path={"/product/edit/:skuCode"} element={<EditProduct/>}/>
