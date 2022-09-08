@@ -26,7 +26,7 @@ const AddCategory = () => {
     }
     return (
         <>
-            <h1 className={"text-center"}>Add New Category</h1>
+            <h3 className={"text-center"}>Add New Category</h3>
             {success && <div className={'alert alert-success'}>Saved!</div>}
             {error && <div className={'alert alert-danger'}>{error}</div>}
             <Form>
