@@ -5,6 +5,7 @@ import logo from '../../react-1-logo.svg';
 import AuthService from "../../services/AuthService";
 import RenderOnRole from "../helper/RenderOnRole";
 import Role from "../helper/Role";
+import {FaShoppingCart} from "react-icons/all";
 
 
 const NavigationBar = () => {
@@ -30,7 +31,10 @@ const NavigationBar = () => {
                 </Nav>
                 <Navbar.Collapse className="justify-content-end">
                     <Navbar.Text style={{paddingRight: '1rem'}}>
-                        Hello, {AuthService.getUsername()} |
+                        Hello, {AuthService.getUsername()}
+                        <Link to={'/cart'}>
+                            <FaShoppingCart style={{paddingLeft: '5px'}} size={'25px'}/>
+                        </Link>
                     </Navbar.Text>
                     <Button variant="outline-info" onClick={AuthService.doLogout}>Logout</Button>
                 </Navbar.Collapse>

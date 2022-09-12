@@ -1,50 +1,125 @@
 .App {
-  text-align: center;
+    text-align: center;
 }
 
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+    height: 40vmin;
+    pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
 }
 
 .App-link {
-  color: #61dafb;
+    color: #61dafb;
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
-.category-border{
-  border-radius: 25px;
-  border: 2px solid #73AD21;
-  padding: 20px;
-  margin-left: 10px;
-  height: auto;
+
+.category-border {
+    border-radius: 25px;
+    border: 2px solid #73AD21;
+    padding: 20px;
+    margin-left: 10px;
+    height: auto;
 }
-.more-space{
-  width: 5px;
-  height: auto;
-  display: inline-block;
+
+.more-space {
+    width: 5px;
+    height: auto;
+    display: inline-block;
+}
+
+/* cart css */
+/*.cart-page {*/
+/*    margin: 80px auto;*/
+/*}*/
+
+.cart-page table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.cart-info {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cart-page th {
+    text-align: center;
+    padding: 5px;
+    color: #fff;
+    background: #ff523b;
+    font-weight: bolder;
+}
+
+.cart-page td {
+    padding: 10px 5px;
+}
+.cart-page .center-input{
+    text-align: center;
+    vertical-align: middle;
+}
+.cart-page td input {
+    width: 40px;
+    height: 30px;
+    padding: 5px;
+}
+
+.cart-page td a {
+    color: #ff523b;
+    font-size: 12px;
+}
+
+.cart-page td img {
+    width: 145px;
+    height: 90px;
+    margin-right: 10px;
+}
+
+.total-price {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.total-price table {
+    border-top: 3px solid #ff523b;
+    width: 100%;
+    max-width: 450px;
+}
+
+.cart-page td:last-child {
+    text-align: right;
+}
+
+.cart-page th:last-child {
+    text-align: right;
+}
+.total-price td:last-child {
+    text-align: right;
+}
+
+.total-price th:last-child {
+    text-align: right;
 }
