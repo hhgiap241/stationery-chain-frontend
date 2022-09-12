@@ -27,6 +27,7 @@ const initKeycloak = (callback) => {
 };
 const doLogin = keycloak.login;
 const doLogout = () => {
+    localStorage.removeItem('user_id');
     localStorage.removeItem('access-token');
     localStorage.removeItem('refresh-token');
     keycloak.logout();
