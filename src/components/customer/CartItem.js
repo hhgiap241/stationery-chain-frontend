@@ -27,6 +27,21 @@ const CartItem = React.memo(({cartItem, totalPrice, onPriceChange}) => {
         setProduct(prevState => {
             return {...prevState, quantity: newQuantity, price: newPrice}
         });
+        const cartItem = {
+            id: product.id,
+            quantity: newQuantity,
+            price: newPrice,
+            skuCode: product.skuCode,
+        };
+        console.log(cartItem);
+        const userId = localStorage.getItem('user_id');
+        HttpService.getAxiosInstance().put(`http://localhost:8080/api/v1/cart/${userId}`, cartItem)
+            .then(res => {
+                console.log('Updated');
+                console.log(res.data);
+            }).catch(err => {
+            console.log(err);
+        });
     }
     return (
         <tr>
@@ -37,7 +52,7 @@ const CartItem = React.memo(({cartItem, totalPrice, onPriceChange}) => {
                         <p>{defaultProduct.name}</p>
                         <small>Unit Price: {defaultProduct.price}$</small>
                         <br/>
-                        <a href={'#'}>Remove</a>
+                        <a href={'ddfsdfsdfs'}>Remove</a>
                     </div>
                 </div>
             </td>
