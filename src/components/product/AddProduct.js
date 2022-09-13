@@ -1,6 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, FloatingLabel, Form, Image} from "react-bootstrap";
-import {useNavigate} from "react-router-dom";
 import HttpService from "../../services/HttpService";
 
 const AddProduct = () => {
