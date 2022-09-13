@@ -1,16 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import HttpService from "../../services/HttpService";
 import ProductItem from "./ProductItem";
-import {Button, Form} from "react-bootstrap";
+import {Button, Form, Pagination, PageItem} from "react-bootstrap";
 
 const ProductList = () => {
-    const [products, setProducts] = useState([]);
+    const [response, setResponse] = useState({products: [], totalItems: 0, totalPages: 0, currentPage: 0});
+    const [products, setProducts] = useState(response.products);
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState("");
     useEffect(() => {
-        HttpService.getAxiosInstance().get('http://localhost:8080/api/v1/product')
+        HttpService.getAxiosInstance().get('http://localhost:8080/api/v1/product?page=0')
             .then(res => {
-                setProducts(res.data);
+                setResponse(res.data);
+                setProducts(res.data.products);
                 console.log(res.data);
             }).catch(err => {
             console.log(err);
@@ -53,6 +55,17 @@ const ProductList = () => {
             })
         });
     }
+    const handlePagination = async (page) => {
+        console.log(page);
+        try {
+            let response = await HttpService.getAxiosInstance().get(`http://localhost:8080/api/v1/product?page=${page}`);
+            console.log("pagination");
+            setResponse(response.data);
+            setProducts(response.data.products);
+        } catch (e) {
+            console.log(e);
+        }
+    }
     return (
         <div className={"row pb-3"}>
             <div className={"col-3 category-border"}>
@@ -86,6 +99,19 @@ const ProductList = () => {
                         })
                     }
                 </div>
+                <Pagination>
+                    <Pagination.Prev/>
+                    {
+                        response.totalPages > 0 && Array.from(Array(response.totalPages).keys()).map(page => {
+                            return (
+                                <PageItem key={page} active={page === response.currentPage} onClick={() => handlePagination(page)}>
+                                    {page + 1}
+                                </PageItem>
+                            )
+                        })
+                    }
+                    <Pagination.Next/>
+                </Pagination>
             </div>
         </div>
     );

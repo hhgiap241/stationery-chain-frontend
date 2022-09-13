@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import HttpService from "../../services/HttpService";
-import {Button, FloatingLabel, Form, Image} from "react-bootstrap";
+import {Button, FloatingLabel, Form} from "react-bootstrap";
 
 const AddCategory = () => {
     const [category, setCategory] = useState({name: ''});

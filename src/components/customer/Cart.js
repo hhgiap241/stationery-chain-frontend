@@ -2,11 +2,13 @@ import React, {useCallback, useEffect, useState} from 'react';
 import HttpService from "../../services/HttpService";
 import CartItem from "./CartItem";
 import {Button} from "react-bootstrap";
+import {useNavigate} from "react-router-dom";
 
 const Cart = () => {
     const [products, setProducts] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0.00);
     const userId = localStorage.getItem('user_id');
+    const navigate = useNavigate();
     useEffect(() => {
         HttpService.getAxiosInstance().get(`http://localhost:8080/api/v1/cart/${userId}`)
             .then(res => {
@@ -22,9 +24,12 @@ const Cart = () => {
     const handleTotalPriceChange = useCallback((newPrice) => {
         setTotalPrice(parseFloat(newPrice.toFixed(2)));
     }, []);
+    const handleCheckoutBtn = () => {
+        navigate('/order', {state: {products, totalPrice}});
+    }
     return (
         <>
-            <h1>Cart page</h1>
+            <h3 className={"text-center"}>Cart Page</h3>
             <div className={"cart-page"}>
                 <table>
                     <tbody>
@@ -35,7 +40,8 @@ const Cart = () => {
                     </tr>
                     {
                         products.map(product =>
-                            <CartItem cartItem={product} totalPrice={totalPrice} onPriceChange={handleTotalPriceChange} key={product.id}/>
+                            <CartItem cartItem={product} totalPrice={totalPrice} onPriceChange={handleTotalPriceChange}
+                                      key={product.id}/>
                         )
                     }
                     </tbody>
@@ -60,7 +66,7 @@ const Cart = () => {
 
                 </table>
             </div>
-            <Button className={'float-end m-3'}>
+            <Button className={'float-end m-3'} onClick={handleCheckoutBtn}>
                 Checkout
             </Button>
         </>
