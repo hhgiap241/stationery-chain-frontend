@@ -8,7 +8,7 @@ const EditInventory = () => {
     useEffect(() => {
         let result;
         const fetchProductData = async () => {
-            const productResponse = await HttpService.getAxiosInstance().get('http://localhost:8080/api/v1/product');
+            const productResponse = await HttpService.getAxiosInstance().get('http://localhost:8080/api/v1/product/all');
             setProducts(productResponse.data);
             return productResponse.data;
         }

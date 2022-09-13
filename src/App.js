@@ -16,6 +16,7 @@ import AddCategory from "./components/category/AddCategory";
 import EditInventory from "./components/product/EditInventory";
 import InventoryList from "./components/product/InventoryList";
 import Cart from "./components/customer/Cart";
+import Order from "./components/customer/Order";
 
 function App() {
     return (
@@ -28,6 +29,7 @@ function App() {
                         <Route path={"/product"} element={<ProductList/>}/>
                         <Route path={"/category"} element={<CategoryList/>}/>
                         <Route path={"/cart"} element={<Cart/>}/>
+                        <Route path={"/order"} element={<Order/>}/>
                         {/*// secure route*/}
                         <Route element={<RoleRoute role={Role.ADMIN}/>}>
                             <Route path={"/management"} element={<Management/>}>
