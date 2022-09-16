@@ -3,7 +3,13 @@ import {Button, FloatingLabel, Form, Image} from "react-bootstrap";
 import HttpService from "../../services/HttpService";
 
 const AddProduct = () => {
-    const [product, setProduct] = useState({name: '', description: '', price: '', category: '', url: 'https://image.goat.com/transform/v1/attachments/product_template_additional_pictures/images/021/545/490/original/509480_01.jpg.jpeg?action=crop&width=750'});
+    const [product, setProduct] = useState({
+        name: '',
+        description: '',
+        price: '',
+        category: '',
+        url: 'https://image.goat.com/transform/v1/attachments/product_template_additional_pictures/images/021/545/490/original/509480_01.jpg.jpeg?action=crop&width=750'
+    });
     const [categories, setCategories] = useState([]);
     const [image, setImage] = useState(null);
     const [success, setSuccess] = useState(false);
@@ -42,7 +48,8 @@ const AddProduct = () => {
     }
     const handleSubmitBtn = async (event) => {
         event.preventDefault();
-        try{
+        console.log('product before upload', product);
+        try {
             let response = await HttpService.getAxiosInstance().post('http://localhost:8080/api/v1/product', product);
             console.log(response.data);
             setSuccess(true);
@@ -53,14 +60,23 @@ const AddProduct = () => {
             console.log(e);
         }
     }
-    const fileSelectedHandler = (event) =>{
+    const fileSelectedHandler = (event) => {
         console.log(event.target.files);
         setImage(event.target.files[0]); // get first file
     }
-    const fileUploadHandler = () => {
-        // const formData = new FormData();
-        // formData.append('image', image, image.name);
-        console.log('sending image', image);
+    const fileUploadHandler = async () => {
+        const formData = new FormData();
+        console.log(image);
+        formData.append('imageFile', image);
+        try{
+            const response = await HttpService.getAxiosInstance().post('http://localhost:8080/api/v1/image', formData);
+            console.log('url: ' + response.data);
+            setProduct(prevState => {
+                return {...prevState, url: response.data}
+            });
+        }catch (err){
+            console.log(err);
+        }
     }
     return (
         <>
@@ -71,9 +87,10 @@ const AddProduct = () => {
                 <div className={"col-3"}>
                     <Image src={product.url} rounded fluid/>
                     <Form.Group controlId="formFile" className="mb-3 mt-3">
-                        <Form.Control type="file" onChange={event => fileSelectedHandler(event)} />
+                        <Form.Control type="file" onChange={event => fileSelectedHandler(event)}/>
                     </Form.Group>
-                    <Button variant={"outline-primary"} className={"w-100"} onClick={fileUploadHandler}>Upload Image</Button>
+                    <Button variant={"outline-primary"} className={"w-100"} onClick={fileUploadHandler}>Upload
+                        Image</Button>
                 </div>
                 <div className={"col-9"}>
                     <Form>
