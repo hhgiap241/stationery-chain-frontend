@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
-import {Button, FloatingLabel, Form, Image, Modal} from "react-bootstrap";
+import {Button, FloatingLabel, Form, Image, Modal, ProgressBar} from "react-bootstrap";
 import HttpService from "../../services/HttpService";
 
 // update name, description, price, category, image url
@@ -12,6 +12,8 @@ const EditProduct = () => {
     const [categories, setCategories] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [image, setImage] = useState(null);
+    const [progress, setProgress] = useState(0);
+    const [success, setSuccess] = useState(false);
     useEffect(() => {
         HttpService.getAxiosInstance().get(`http://localhost:8080/api/v1/product/${skuCode}`)
             .then(res => {
@@ -96,26 +98,36 @@ const EditProduct = () => {
         console.log(image);
         formData.append('imageFile', image);
         try{
-            const response = await HttpService.getAxiosInstance().post('http://localhost:8080/api/v1/image', formData);
+            const response = await HttpService.getAxiosInstance().post('http://localhost:8080/api/v1/image', formData, {
+                onUploadProgress: progressEvent => {
+                    const progress = Math.round((progressEvent.loaded / progressEvent.total) * 100);
+                    setProgress(progress);
+                }
+            });
             console.log('url: ' + response.data);
+            setProgress(0);
+            setSuccess(true);
             setProduct(prevState => {
                 return {...prevState, url: response.data}
             });
         }catch (err){
+            setSuccess(false);
             console.log(err);
         }
     }
     return (
         <>
             <h1 className={"text-center"}>Edit Product: {product.name}</h1>
+            {success && <div className={'alert alert-success'}>Saved!</div>}
             <div className={"row"}>
                 <div className={"col-3"}>
                     <Image src={product.url} rounded fluid/>
                     <Form.Group controlId="formFile" className="mb-3 mt-3">
                         <Form.Control type="file" onChange={event => fileSelectedHandler(event)}/>
                     </Form.Group>
-                    <Button variant={"outline-primary"} className={"w-100"} onClick={fileUploadHandler}>Upload
+                    <Button variant={"outline-primary"} className={"w-100 mb-2"} onClick={fileUploadHandler}>Upload
                         Image</Button>
+                    <ProgressBar animated now={progress} />
                 </div>
                 <div className={"col-9"}>
                     <Form>
