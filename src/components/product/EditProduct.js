@@ -11,6 +11,7 @@ const EditProduct = () => {
     const [product, setProduct] = useState({name: '', description: '', price: '', category: '', url: ''});
     const [categories, setCategories] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const [image, setImage] = useState(null);
     useEffect(() => {
         HttpService.getAxiosInstance().get(`http://localhost:8080/api/v1/product/${skuCode}`)
             .then(res => {
@@ -86,13 +87,35 @@ const EditProduct = () => {
             console.log(error);
         }
     }
+    const fileSelectedHandler = (event) => {
+        console.log(event.target.files);
+        setImage(event.target.files[0]); // get first file
+    }
+    const fileUploadHandler = async () => {
+        const formData = new FormData();
+        console.log(image);
+        formData.append('imageFile', image);
+        try{
+            const response = await HttpService.getAxiosInstance().post('http://localhost:8080/api/v1/image', formData);
+            console.log('url: ' + response.data);
+            setProduct(prevState => {
+                return {...prevState, url: response.data}
+            });
+        }catch (err){
+            console.log(err);
+        }
+    }
     return (
         <>
             <h1 className={"text-center"}>Edit Product: {product.name}</h1>
             <div className={"row"}>
                 <div className={"col-3"}>
                     <Image src={product.url} rounded fluid/>
-                    <Button variant={"outline-primary"} className={"w-100 mt-3"}>Change Image</Button>
+                    <Form.Group controlId="formFile" className="mb-3 mt-3">
+                        <Form.Control type="file" onChange={event => fileSelectedHandler(event)}/>
+                    </Form.Group>
+                    <Button variant={"outline-primary"} className={"w-100"} onClick={fileUploadHandler}>Upload
+                        Image</Button>
                 </div>
                 <div className={"col-9"}>
                     <Form>
