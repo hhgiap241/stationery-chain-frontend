@@ -37,7 +37,7 @@ const ProductItem = ({product}) => {
     return (
         <>
             <Card style={{width: '18rem'}}>
-                <Card.Img variant="top" src={product.url}/>
+                <Card.Img variant="top" src={product.url} style={{height: '178px', width: '286px'}}/>
                 <Card.Body>
                     <Card.Title>{product.name}</Card.Title>
                     <Card.Text>{product.description.slice(0, 60)}...</Card.Text>
