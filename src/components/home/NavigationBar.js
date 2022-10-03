@@ -5,7 +5,7 @@ import logo from '../../react-1-logo.svg';
 import AuthService from "../../services/AuthService";
 import RenderOnRole from "../helper/RenderOnRole";
 import Role from "../helper/Role";
-import {FaShoppingCart} from "react-icons/all";
+import {FaList, FaShoppingCart, FaUser} from "react-icons/all";
 
 
 const NavigationBar = () => {
@@ -30,12 +30,17 @@ const NavigationBar = () => {
                     </RenderOnRole>
                 </Nav>
                 <Navbar.Collapse className="justify-content-end">
-                    <Navbar.Text style={{paddingRight: '1rem'}}>
-                        Hello, {AuthService.getUsername()}
-                        <Link to={'/cart'}>
-                            <FaShoppingCart style={{paddingLeft: '5px'}} size={'25px'}/>
-                        </Link>
-                    </Navbar.Text>
+                    <NavDropdown title={`Hello, ${AuthService.getUsername()}`} style={{color: "white", paddingRight: '1rem'}}>
+                        <NavDropdown.Item as={Link} to={'/account'}>
+                            <FaUser style={{paddingLeft: '5px'}} size={'25px'}/> Profile
+                        </NavDropdown.Item>
+                        <NavDropdown.Item as={Link} to={'/cart'}>
+                            <FaShoppingCart style={{paddingLeft: '5px'}} size={'25px'}/> Cart
+                        </NavDropdown.Item>
+                        <NavDropdown.Item as={Link} to={'/order'}>
+                            <FaList style={{paddingLeft: '5px'}} size={'25px'}/> Order
+                        </NavDropdown.Item>
+                    </NavDropdown>
                     <Button variant="outline-info" onClick={AuthService.doLogout}>Logout</Button>
                 </Navbar.Collapse>
             </div>
