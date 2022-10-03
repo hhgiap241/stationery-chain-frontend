@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import HttpService from "../../services/HttpService";
 
-const OrderItem = ({product}) => {
+const CheckoutItem = ({product}) => {
     const [defaultProduct, setDefaultProduct] = useState({name: '', price: 0, url: ''});
     useEffect(() => {
         HttpService.getAxiosInstance().get(`http://localhost:8080/api/v1/product/${product.skuCode}`)
@@ -32,4 +32,4 @@ const OrderItem = ({product}) => {
     );
 };
 
-export default OrderItem;
+export default CheckoutItem;
