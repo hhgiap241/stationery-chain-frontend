@@ -17,7 +17,7 @@ import EditInventory from "./components/product/EditInventory";
 import InventoryList from "./components/product/InventoryList";
 import Cart from "./components/customer/Cart";
 import Checkout from "./components/customer/Checkout";
-import OrderDetail from "./components/customer/Order";
+import OrderDetail from "./components/customer/OrderDetail";
 import Order from "./components/customer/Order";
 
 function App() {

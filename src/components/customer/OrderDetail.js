@@ -1,23 +1,41 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, FloatingLabel, Form} from "react-bootstrap";
 import CheckoutItem from "./CheckoutItem";
+import HttpService from "../../services/HttpService";
+import {useParams} from "react-router-dom";
+import OrderStatus from "../helper/OrderStatus";
 
 const OrderDetail = () => {
-    const [customer, setCustomer] = React.useState({name: '', address: '', phone: ''});
-    const [products, setProducts] = React.useState([]);
-    const [totalPrice, setTotalPrice] = React.useState(0.00);
+    const [order, setOrder] = useState({
+        customerName: '',
+        customerAddress: 'customer.address',
+        customerPhone: 'customer.phone',
+        totalPrice: 0,
+        orderLineItemsDtoList: []
+    });
+    const {id} = useParams();
+
+    useEffect(() => {
+        HttpService.getAxiosInstance().get(`http://localhost:8080/api/v1/order/detail/${id}`)
+            .then(res => {
+                setOrder(res.data);
+                console.log(res.data);
+            }).catch(err => {
+            console.log(err);
+        })
+    }, []);
     return (
         <>
             <h3 className={"text-center"}>Place order</h3>
             <Form>
                 <FloatingLabel controlId="floatingCustomerName" label="User Name" className="mb-3">
                     <Form.Control type="text" placeholder="Enter user name"
-                                  value={customer.name}
+                                  value={order.customerName}
                                   disabled={true}/>
                 </FloatingLabel>
                 <FloatingLabel controlId="floatingCustomerPhone" label="Customer phone" className="mb-3">
                     <Form.Control type="text" placeholder="Enter customer phone"
-                                  value={customer.phone}
+                                  value={order.customerPhone}
                                   disabled={true}/>
                 </FloatingLabel>
                 <FloatingLabel className="mb-3" controlId="floatingCustomerAddress"
@@ -25,7 +43,7 @@ const OrderDetail = () => {
                     <Form.Control
                         type={"text"}
                         placeholder="Enter customer address"
-                        value={customer.address}
+                        value={order.customerAddress}
                         disabled={true}/>
                 </FloatingLabel>
             </Form>
@@ -38,7 +56,7 @@ const OrderDetail = () => {
                         <th>Subtotal</th>
                     </tr>
                     {
-                        products.map(product =>
+                        order.orderLineItemsDtoList.map(product =>
                             <CheckoutItem product={product} key={product.id}/>
                         )
                     }
@@ -50,7 +68,7 @@ const OrderDetail = () => {
                     <tbody>
                     <tr>
                         <td>Subtotal</td>
-                        <td>{totalPrice}$</td>
+                        <td>{order.totalPrice}$</td>
                     </tr>
                     <tr>
                         <td>Shipping Price</td>
@@ -58,7 +76,7 @@ const OrderDetail = () => {
                     </tr>
                     <tr>
                         <td>Total</td>
-                        <td>{totalPrice + 10}$</td>
+                        <td>{order.totalPrice + 10}$</td>
                     </tr>
                     </tbody>
 
