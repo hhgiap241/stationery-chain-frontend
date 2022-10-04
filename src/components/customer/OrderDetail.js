@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {Button, FloatingLabel, Form} from "react-bootstrap";
+import {FloatingLabel, Form} from "react-bootstrap";
 import CheckoutItem from "./CheckoutItem";
 import HttpService from "../../services/HttpService";
 import {useParams} from "react-router-dom";
-import OrderStatus from "../helper/OrderStatus";
+import OrderTracking from "./OrderTracking";
 
 const OrderDetail = () => {
     const [order, setOrder] = useState({
@@ -26,7 +26,8 @@ const OrderDetail = () => {
     }, []);
     return (
         <>
-            <h3 className={"text-center"}>Place order</h3>
+            <h3 className={"text-center"}>Order Detail (ID: {order.id})</h3>
+            <OrderTracking date={order.createdAt} status={order.orderStatus}/>
             <Form>
                 <FloatingLabel controlId="floatingCustomerName" label="User Name" className="mb-3">
                     <Form.Control type="text" placeholder="Enter user name"
