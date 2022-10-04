@@ -199,3 +199,28 @@
 }
 .order-tracking:first-child:before{display: none;}
 .order-tracking.completed:before{background-color: #27aa80;}
+
+.order-tracking .is-cancelled{
+    display: block;
+    position: relative;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    border: 0px solid #AFAFAF;
+    background-color: red;
+    margin: 0 auto;
+    transition: background 0.25s linear;
+    -webkit-transition: background 0.25s linear;
+    z-index: 2;
+}
+.order-tracking.cancelled::before {
+    content: '';
+    display: block;
+    height: 3px;
+    width: calc(100% - 40px);
+    background-color: red;
+    top: 13px;
+    position: absolute;
+    left: calc(-50% + 20px);
+    z-index: 0;
+}

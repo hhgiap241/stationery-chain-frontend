@@ -55,8 +55,8 @@ const OrderTracking = (props) => {
                                     <span className="is-complete"></span>
                                     <p>{OrderStatus.DELIVERING}<br/><span>{deliveryDate}</span></p>
                                 </div>
-                                <div className="order-tracking">
-                                    <span className="is-complete"></span>
+                                <div className="order-tracking cancelled">
+                                    <span className="is-cancelled"></span>
                                     <p>{OrderStatus.CANCELLED}<br/><span>#########</span></p>
                                 </div>
                             </>
