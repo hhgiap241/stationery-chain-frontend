@@ -19,6 +19,7 @@ import Cart from "./components/customer/Cart";
 import Checkout from "./components/customer/Checkout";
 import OrderDetail from "./components/customer/OrderDetail";
 import Order from "./components/customer/Order";
+import OrderList from "./components/admin/OrderList";
 
 function App() {
     return (
@@ -41,6 +42,7 @@ function App() {
                                 <Route path={"category/add"} element={<AddCategory/>}/>
                                 <Route path={"inventory"} element={<InventoryList/>}/>
                                 <Route path={"inventory/edit"} element={<EditInventory/>}/>
+                                <Route path={"order"} element={<OrderList/>}/>
                             </Route>
                             <Route path={"/product/edit/:skuCode"} element={<EditProduct/>}/>
                         </Route>

@@ -3,6 +3,7 @@ import AddProduct from "../product/AddProduct";
 import AddCategory from "../category/AddCategory";
 import EditInventory from "../product/EditInventory";
 import InventoryList from "../product/InventoryList";
+import OrderList from "./OrderList";
 
 const RenderOnSlug = ({slug}) => {
     console.log(slug);
@@ -15,6 +16,8 @@ const RenderOnSlug = ({slug}) => {
             return <InventoryList/>
         case 'inventory/edit':
             return <EditInventory/>
+        case 'order':
+            return <OrderList/>
         default: return null;
     }
 };

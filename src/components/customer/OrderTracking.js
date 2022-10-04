@@ -15,7 +15,22 @@ const OrderTracking = (props) => {
             <div className="col-12 hh-grayBox pt45 pb20">
                 <div className="row justify-content-between">
                     {
-                        status === OrderStatus.DELIVERING ? (
+                        status === OrderStatus.PENDING ? (
+                            <>
+                                <div className="order-tracking completed">
+                                    <span className="is-complete"></span>
+                                    <p>{OrderStatus.PENDING}<br/><span>{orderDate}</span></p>
+                                </div>
+                                <div className="order-tracking">
+                                    <span className="is-complete"></span>
+                                    <p>{OrderStatus.DELIVERING}<br/><span>#########</span></p>
+                                </div>
+                                <div className="order-tracking">
+                                    <span className="is-complete"></span>
+                                    <p>{OrderStatus.DELIVERED}<br/><span>#########</span></p>
+                                </div>
+                            </>
+                        ) : status === OrderStatus.DELIVERING ? (
                             <>
                                 <div className="order-tracking completed">
                                     <span className="is-complete"></span>
