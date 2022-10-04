@@ -25,7 +25,7 @@ const Cart = () => {
         setTotalPrice(parseFloat(newPrice.toFixed(2)));
     }, []);
     const handleCheckoutBtn = () => {
-        navigate('/order', {state: {products, totalPrice}});
+        navigate('/checkout', {state: {products, totalPrice}});
     }
     return (
         <>
@@ -66,7 +66,7 @@ const Cart = () => {
 
                 </table>
             </div>
-            <Button className={'float-end m-3'} onClick={handleCheckoutBtn}>
+            <Button className={'float-end m-3'} onClick={handleCheckoutBtn} disabled={products.length <= 0}>
                 Checkout
             </Button>
         </>

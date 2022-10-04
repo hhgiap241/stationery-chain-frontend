@@ -1,119 +1,53 @@
-import React from 'react';
-import {useLocation, useNavigate} from "react-router-dom";
-import {Button, FloatingLabel, Form} from "react-bootstrap";
-import OrderItem from "./OrderItem";
+import React, {useEffect, useState} from 'react';
+import {Table} from "react-bootstrap";
 import HttpService from "../../services/HttpService";
+import {Link} from "react-router-dom";
 
 const Order = () => {
-    const location = useLocation();
-    const navigate = useNavigate();
-    console.log(location.state);
-    const [customer, setCustomer] = React.useState({name: '', address: '', phone: ''});
-    const products = location.state.products;
-    console.log(products);
-    const totalPrice = location.state.totalPrice;
-    const handleCustomerNameChange = (event) => {
-        setCustomer(prevState => {
-            return {...prevState, name: event.target.value}
-        });
-    }
-    const handleCustomerAddressChange = (event) => {
-        setCustomer(prevState => {
-            return {...prevState, address: event.target.value}
-        });
-    }
-    const handleCustomerPhoneChange = (event) => {
-        setCustomer(prevState => {
-            return {...prevState, phone: event.target.value}
-        });
-    }
-    const handleConfirmBtn = async (event) => {
-        event.preventDefault();
-        const order = {
-            userId: localStorage.getItem('user_id'),
-            customerName: customer.name,
-            customerAddress: customer.address,
-            customerPhone: customer.phone,
-            totalPrice: totalPrice,
-            orderLineItemsDtoList: products.map(product => {
-                return {
-                    skuCode: product.skuCode,
-                    quantity: product.quantity,
-                    price: product.price
-                }
-            })
-        }
-        console.log(order);
-        try {
-            let response = await HttpService.getAxiosInstance().post('http://localhost:8080/api/v1/order', order);
-            console.log(response.data);
-            navigate('/cart');
-        } catch (err) {
+    const [orders, setOrders] = useState([]);
+    useEffect(() => {
+        const userId = localStorage.getItem('user_id');
+        HttpService.getAxiosInstance().get(`http://localhost:8080/api/v1/order/${userId}`)
+            .then(res => {
+                console.log(res.data);
+                setOrders(res.data);
+            }).catch(err => {
             console.log(err);
-        }
-    }
+        })
+    }, []);
     return (
         <>
-            <h3 className={"text-center"}>Place order</h3>
-            <Form>
-                <FloatingLabel controlId="floatingCustomerName" label="User Name" className="mb-3">
-                    <Form.Control type="text" placeholder="Enter user name"
-                                  value={customer.name}
-                                  onChange={event => handleCustomerNameChange(event)}/>
-                </FloatingLabel>
-                <FloatingLabel controlId="floatingCustomerPhone" label="Customer phone" className="mb-3">
-                    <Form.Control type="text" placeholder="Enter customer phone"
-                                  value={customer.phone}
-                                  onChange={event => handleCustomerPhoneChange(event)}/>
-                </FloatingLabel>
-                <FloatingLabel className="mb-3" controlId="floatingCustomerAddress"
-                               label="Customer Address">
-                    <Form.Control
-                        type={"text"}
-                        placeholder="Enter customer address"
-                        value={customer.address}
-                        onChange={event => handleCustomerAddressChange(event)}/>
-                </FloatingLabel>
-            </Form>
-            <div className={"cart-page"}>
-                <table>
-                    <tbody>
-                    <tr className={'text-center'}>
-                        <th>Product</th>
-                        <th>Quantity</th>
-                        <th>Subtotal</th>
-                    </tr>
-                    {
-                        products.map(product =>
-                            <OrderItem product={product} key={product.id}/>
+            <h3 className={"text-center"}>Order Page</h3>
+            <Table striped bordered hover>
+                <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Customer</th>
+                    <th>Phone</th>
+                    <th>Total Price</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {
+                    orders.map(order => {
+                        return (
+                            <tr key={order.id}>
+                                <td>{order.id}</td>
+                                <td>{order.createdAt}</td>
+                                <td>{order.orderStatus}</td>
+                                <td>{order.customerName}</td>
+                                <td>{order.customerPhone}</td>
+                                <td>{order.totalPrice}$</td>
+                                <td><Link to={`/order/${order.id}`}>View</Link></td>
+                            </tr>
                         )
-                    }
-                    </tbody>
-                </table>
-            </div>
-            <div className={'total-price'}>
-                <table>
-                    <tbody>
-                    <tr>
-                        <td>Subtotal</td>
-                        <td>{totalPrice}$</td>
-                    </tr>
-                    <tr>
-                        <td>Shipping Price</td>
-                        <td>10$</td>
-                    </tr>
-                    <tr>
-                        <td>Total</td>
-                        <td>{totalPrice + 10}$</td>
-                    </tr>
-                    </tbody>
-
-                </table>
-            </div>
-            <Button variant="primary" type="button" className={'float-end m-3'}
-                    onClick={event => handleConfirmBtn(event)}>
-                Confirm
-            </Button>
+                    })
+                }
+                </tbody>
+            </Table>
         </>
     );
 };

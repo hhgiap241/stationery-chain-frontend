@@ -19,6 +19,10 @@ const Management = () => {
                     <Dropdown.Item as={Link} to={'/management/inventory'}>View All Inventory</Dropdown.Item>
                     <Dropdown.Item as={Link} to={'/management/inventory/edit'}>Update Product Quantity</Dropdown.Item>
                 </DropdownButton>
+                <div className="more-space"/>
+                <DropdownButton id="order-dropdown-button" title="Order" as={ButtonGroup}>
+                    <Dropdown.Item as={Link} to={'/management/order'}>View All Order</Dropdown.Item>
+                </DropdownButton>
             </div>
             <div className={'mb-3'}>
                 <RenderOnSlug slug={location.pathname.split("/").splice(2).join("/")}/>

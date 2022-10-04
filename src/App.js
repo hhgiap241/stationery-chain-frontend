@@ -16,7 +16,10 @@ import AddCategory from "./components/category/AddCategory";
 import EditInventory from "./components/product/EditInventory";
 import InventoryList from "./components/product/InventoryList";
 import Cart from "./components/customer/Cart";
+import Checkout from "./components/customer/Checkout";
+import OrderDetail from "./components/customer/OrderDetail";
 import Order from "./components/customer/Order";
+import OrderList from "./components/admin/OrderList";
 
 function App() {
     return (
@@ -29,7 +32,9 @@ function App() {
                         <Route path={"/product"} element={<ProductList/>}/>
                         <Route path={"/category"} element={<CategoryList/>}/>
                         <Route path={"/cart"} element={<Cart/>}/>
+                        <Route path={"/checkout"} element={<Checkout/>}/>
                         <Route path={"/order"} element={<Order/>}/>
+                        <Route path={"/order/:id"} element={<OrderDetail/>}/>
                         {/*// secure route*/}
                         <Route element={<RoleRoute role={Role.ADMIN}/>}>
                             <Route path={"/management"} element={<Management/>}>
@@ -37,6 +42,7 @@ function App() {
                                 <Route path={"category/add"} element={<AddCategory/>}/>
                                 <Route path={"inventory"} element={<InventoryList/>}/>
                                 <Route path={"inventory/edit"} element={<EditInventory/>}/>
+                                <Route path={"order"} element={<OrderList/>}/>
                             </Route>
                             <Route path={"/product/edit/:skuCode"} element={<EditProduct/>}/>
                         </Route>
