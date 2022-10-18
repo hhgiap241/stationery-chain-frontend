@@ -40,7 +40,7 @@ const ProductItem = ({product}) => {
                 <Card.Img variant="top" src={product.url} style={{height: '178px', width: '286px'}}/>
                 <Card.Body>
                     <Card.Title>{product.name}</Card.Title>
-                    <Card.Text>{product.description.slice(0, 60)}...</Card.Text>
+                    <Card.Text>{product.description.slice(0, 40)}...</Card.Text>
                     <Card.Text>
                         <FaCartPlus/>&nbsp;{product.price}$
                     </Card.Text>

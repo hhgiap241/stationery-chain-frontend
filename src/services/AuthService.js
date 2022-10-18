@@ -16,6 +16,7 @@ const initKeycloak = (callback) => {
             localStorage.setItem('access-token', keycloak.token);
             localStorage.setItem('refresh-token', keycloak.refreshToken);
             localStorage.setItem('user_id', keycloak.tokenParsed['user_id']);
+            console.log('id-token: ', keycloak.idToken);
             console.log(keycloak.token);
             console.log(keycloak);
             callback();
